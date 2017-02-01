@@ -16,19 +16,11 @@ def has_chinese_character(t_str):
 def serch_key(request):
     ct = request.GET.get("key", "")
     if ct != "":
-        print(ct)
-        t = Words.objects.get(id=1)
-        print(t.word)
         try:
-            #if has_chinese_character(ct):
-            #    ct = Words.objects.get(word=ct.decode("GBK").encode("utf8"))
-            #else:
-            #    ct = Translate.objects.get(word=ct.decode("GBK").encode("utf8"))
-            ct = Words.objects.get(id="1")            
+            if has_chinese_character(ct):
+                ct = Translate.objects.get(word=ct.encode("utf8")).explain.encode("utf8") 
+            else:
+                ct = Words.objects.get(word=ct.encode("utf8")).explain.encode("utf8") 
         except:            
-            print("qwert")
-        finally:
-            ct = "Not found"
-        
-        print(ct)
+            ct = "Not Result!"
     return render_to_response("dict.html", {"content":ct})
