@@ -11,18 +11,22 @@ from django.db import models
 
 
 class Translate(models.Model):
-    
-    word = models.TextField(blank=True)  # This field type is a guess.
-    explain = models.TextField(blank=True)  # This field type is a guess.
+    id = models.IntegerField(primary_key=True, blank=True, null=False)  # AutoField?
+    word = models.TextField(blank=True, null=True)
+    explain = models.TextField(blank=True, null=True)
 
     class Meta:
+        managed = False
         db_table = 'Translate'
 
 
 class Words(models.Model):
-    word = models.TextField(blank=True)  # This field type is a guess.
-    explain = models.TextField(blank=True)  # This field type is a guess.
+    id = models.IntegerField(primary_key=True, blank=True, null=False)  # AutoField?
+    word = models.TextField(blank=True, null=True)
+    explain = models.TextField(blank=True, null=True)
 
     class Meta:
+        managed = False
         db_table = 'Words'
+
 
