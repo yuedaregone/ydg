@@ -24,3 +24,5 @@ def serch_key(request):
         except:            
             ct = "Not Result!"
     return render_to_response("dict.html", {"content":ct})
+
+    

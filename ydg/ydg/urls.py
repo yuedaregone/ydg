@@ -16,8 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from dict.views import serch_key
+from main.views import main_view
+from wintoy.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^dict/', serch_key),
+    url(r'wintoy', wintoy_response),
+    url(r'', main_view),    
 ]
