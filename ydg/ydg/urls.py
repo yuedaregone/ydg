@@ -18,10 +18,12 @@ from django.contrib import admin
 from dict.views import serch_key
 from main.views import main_view
 from wintoy.views import *
+from skv.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^dict/', serch_key),
     url(r'wintoy', wintoy_response),
+    url(r'^skv$', select_key),
     url(r'', main_view),    
 ]
