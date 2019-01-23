@@ -5,16 +5,23 @@ from django.shortcuts import render
 from django.http import HttpRequest,HttpResponse
 from skv.models import Skv
 
-def get_value(key):    
-    return Skv.objects.get(key=key.encode("utf8")).value.encode("utf8") 
+def get_value(key):  
+    skvItem = None
+    try:
+        skvItem = Skv.objects.get(key=key)
+    except:
+        skvItem = None
+    if skvItem is None:
+        return "Not Found!!"
+    return skvItem.value
 
 def set_value(key, val):
     skvItem = None
     try:
-        skvItem = Skv.objects.get(key=key.encode("utf8"))
+        skvItem = Skv.objects.get(key=key)
         skvItem.value = val
     except:
-        skvItem = Skv(key=key.encode("utf8"), value=val.encode("utf8"))
+        skvItem = Skv(key=key, value=val)
     skvItem.save()
 
 def select_key(request):
