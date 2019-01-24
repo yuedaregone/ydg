@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^dict/', serch_key),
     url(r'wintoy', wintoy_response),
+    url(r'^skv/list', list_kv),
     url(r'^skv$', select_key),
     url(r'', main_view),    
 ]

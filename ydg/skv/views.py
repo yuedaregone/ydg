@@ -27,7 +27,7 @@ def set_value(key, val):
 def select_key(request):
     if request.method == "GET":
         key = request.GET.get("key", "")
-        if key == "":
+        if key == "":            
             return render_to_response("skv.html", {})
         val = get_value(key)
         return HttpResponse(val)
@@ -36,6 +36,14 @@ def select_key(request):
         val = request.POST.get("value", "")
         set_value(key, val)
         return HttpResponse("OK")
+
+def list_kv(request):
+    skvItems = Skv.objects.all()
+    skvStr = "{"
+    for item in skvItems:
+        skvStr += "\"" + item.key + "\":\"" + item.value + "\","
+    skvStr = skvStr[:len(skvStr)-1] + "}"
+    return HttpResponse(skvStr)
 
 
 
