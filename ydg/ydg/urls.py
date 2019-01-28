@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from dict.views import serch_key
-from main.views import main_view
+from main.views import *
 from wintoy.views import *
 from skv.views import *
 
@@ -26,5 +26,7 @@ urlpatterns = [
     url(r'wintoy', wintoy_response),
     url(r'^skv/list', list_kv),
     url(r'^skv$', select_key),
+    url(r'^ngrok$', redirect_ngrok),
+    url(r'^natapp$', redirect_natapp),
     url(r'', main_view),    
 ]
