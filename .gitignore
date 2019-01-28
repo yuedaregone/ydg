@@ -52,7 +52,5 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-*.sqlite3
-
 # build folder
 build/
