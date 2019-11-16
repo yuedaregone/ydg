@@ -1,7 +1,55 @@
+<!DOCTYPE html>
 <html>
-    <head><title>Main Page</title></head>
-    <body>
-       Nothing For You!Fuck Off!
-    <br>       
-    </body>
+<head>
+    <meta lang="en">
+    <meta charset="UTF-8">
+    <title>WebGL study</title>
+    <link href="style/style.css">
+    <script id="vertex-shader" type="notjs">        
+        attribute vec3 pos;
+        varying vec2 texuv;
+        void main()
+        {  
+            texuv = pos.xy;    
+            gl_Position = vec4(pos, 1.0);            
+        }
+    </script>
+    <script id="fragment-shader" type="notjs">       
+        precision mediump float;        
+        varying vec2 texuv;
+        uniform float _time;
+        uniform vec2 iResolution;
+		#define r(x)     fract(1e4*sin((x)*541.17))
+        #define sr2(x)   ( r(vec2(x,x+.1)) *2.-1. )
+        #define sr3(x)   ( r(vec4(x,x+.1,x+.2,0)) *2.-1. )
+        float flare( vec2 U )                         
+        {	
+			vec2 A = sin(vec2(0., 1.57) + _time);
+            U = abs( U * mat2(A, -A.y, A.x) );
+            return .2/max(U.x * 2.0, U.x + U.y * 1.7);                     
+        }
+        vec4 stars(vec2 U )
+        {
+            vec2 R = iResolution;
+            U =  (U+U - R) / R.y;
+            vec4 O = vec4(-.3);
+            for (float i=0.; i<99.; i++)
+                O += flare (U - sr2(i)*R/R.y )           // rotating flare at random location
+                      * r(i+.2)                          // random scale
+                      * (1.+sin(_time+r(i+.3)*6.))*.1  // time pulse
+                      * (1.+.1*sr3(i)) * 0.5;                  // random color - correlated
+            return O;
+        }
+        void main() 
+		{
+			vec3 col = 0.5 + 0.5*cos(_time + texuv.xyx+vec3(0,2,4));
+			vec4 col4 = stars((texuv.xy * 0.5 + 0.5) * iResolution );
+			gl_FragColor = vec4(col4.xyz, 1);// vec4(vec3(flare(texuv) ), 1.0);// flare(texuv.xy / iResolution));//vec4(col, 1.0);
+        }        
+    </script>
+    <script type="text/javascript" src="static/js/webjs.js"></script>
+</head>
+<body>
+<canvas id="canvas" width="400px" height="400px"></canvas>
+</body>
 </html>
